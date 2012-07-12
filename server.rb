@@ -1,9 +1,6 @@
 #!/usr/bin/ruby
-require 'rubygems'
-require 'sinatra'
-require 'haml'
-require 'data_mapper'
-require 'parseconfig'
+
+%w{rubygems sinatra haml data_mapper parseconfig}.each { |x| require x }
 
 #Load the configuration file using ConfigParser
 config = ParseConfig.new File.dirname(__FILE__) + '/app.conf'
@@ -39,11 +36,15 @@ end
 
 class Handler
   attr_accessor :data
-  allowed_actions = ["create", "delete", "show", "edit"]
+  @@allowed_actions = ["create", "delete", "show", "edit"]
   def initialize(post)
-    self.method(post[:action].to_sym).call post[:name], post[:phone] if allowed_actions.include? post[:action]
+    self.method(post[:action].to_sym).call post[:name], post[:phone] if @@allowed_actions.include? post[:action]
+  end
   def create(name, phone)
-      c = Contact.create(:name=>name, :phone=>name)
+    c = Contact.create(:name=>name, :phone=>name)
+  end
+  def delete(name, phone="")
+    return "asdf"
   end
 end
 
