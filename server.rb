@@ -9,7 +9,7 @@ config = ParseConfig.new File.dirname(__FILE__) + '/app.conf'
 set :port, config["port"]
 set :environment, :test
 set :public_folder, File.dirname(__FILE__) + '/' + config["public_folder"]
-set :haml, :format => :html5
+set :haml, :format => lambda { !!config["html5"] ? :html5 : :xhtml }.call
 
 #initiate the Database
 DataMapper.setup(:default, 'sqlite3://' + config['db_abs_path'])
