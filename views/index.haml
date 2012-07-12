@@ -5,17 +5,24 @@
 	%body
 		.container
 			%header.clearer
-				Contacts Manager
+				%h1 Contacts Manager
 			%section.clearer#form_container
 				%form{:id=>"createContact",:action=>"./handle", :method=>"post"}
-					%input{:type=>"text",:name=>"name"}
-					%input{:type=>"text",:name=>"phone"}
+					%input{:type=>"text",:name=>"name",:placeholder=>"Name"}
+					%input{:type=>"text",:name=>"phone", :placeholder=>"Phone Number"}
 					%input{:type=>"hidden",:name=>"action", :value=>"create"}
 					%input{:type=>"submit"}
 			%section.clearer#contents
-				%table
-					= @output.each do |c|
-					= c
+				%table.display
+					%tr
+						%th Id
+						%th Name
+						%th Phone Number
+					- @output.each do |c|
+						%tr
+							%td= c.id
+							%td= c.name 
+							%td= c.phone
 			%footer.clearer
 				Application by DirectI
 		%script{:src=>"./js/jquery.min.js"}

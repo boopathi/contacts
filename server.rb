@@ -34,7 +34,6 @@ class View
   attr_accessor :data
   def initialize 
     self.data = Contact.all
-    p self.data
   end
 end
 
@@ -43,7 +42,6 @@ class Handler
   def initialize(post)
     if post["action"] == "create"
       c = Contact.create(:name=>post[:name], :phone=>post[:phone])
-      puts self.data
     end
   end
 end
