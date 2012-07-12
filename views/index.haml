@@ -1,6 +1,22 @@
 %html
 	%head
-		%title	Contacts Application
+		%title	Contacts Manager
+		%link{:rel=>"stylesheet", :type=>"text/css", :href=>"./css/main.css"}
 	%body
 		.container
-			%strong.code Hi there
+			%header.clearer
+				Contacts Manager
+			%section.clearer#form_container
+				%form{:id=>"createContact",:action=>"./handle", :method=>"post"}
+					%input{:type=>"text",:name=>"name"}
+					%input{:type=>"text",:name=>"phone"}
+					%input{:type=>"hidden",:name=>"action", :value=>"create"}
+					%input{:type=>"submit"}
+			%section.clearer#contents
+				%table
+					= @output.each do |c|
+					= c
+			%footer.clearer
+				Application by DirectI
+		%script{:src=>"./js/jquery.min.js"}
+		%script{:src=>"./js/main.js"}
