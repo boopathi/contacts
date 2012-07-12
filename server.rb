@@ -1,15 +1,16 @@
 #!/usr/bin/ruby
 
-%w{rubygems sinatra haml data_mapper parseconfig}.each { |x| require x }
+%w{rubygems sinatra haml data_mapper parseconfig json}.each { |x| require x }
 
 #Load the configuration file using ConfigParser
 config = ParseConfig.new File.dirname(__FILE__) + '/app.conf'
 
 #common settings
+#note: using lambdas to make one liners 
 set :port, config["port"]
-set :environment, :test
+set :environment, -> { !!config["development"] ? (config["development"] == "true" ? :test : :production) : :production }.call 
 set :public_folder, File.dirname(__FILE__) + '/' + config["public_folder"]
-set :haml, :format => lambda { !!config["html5"] ? :html5 : :xhtml }.call
+set :haml, :format => -> { !!config["html5"] ? (config["html5"] == "true" ? :html5 : :xhtml) :xhtml }.call
 
 #initiate the Database
 DataMapper.setup(:default, 'sqlite3://' + config['db_abs_path'])
@@ -27,11 +28,16 @@ DataMapper::Logger.new($stdout, :debug)
 DataMapper.finalize
 DataMapper.auto_upgrade!
 
+#Handler for default view - Throw all content from the database
 class View
   attr_accessor :data
   def initialize 
     self.data = Contact.all
   end
+end
+
+module Handle
+  attr_accessor :json, :status, :message
 end
 
 class Handler
