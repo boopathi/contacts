@@ -39,10 +39,11 @@ end
 
 class Handler
   attr_accessor :data
+  allowed_actions = ["create", "delete", "show", "edit"]
   def initialize(post)
-    if post["action"] == "create"
-      c = Contact.create(:name=>post[:name], :phone=>post[:phone])
-    end
+    self.method(post[:action].to_sym).call post[:name], post[:phone] if allowed_actions.include? post[:action]
+  def create(name, phone)
+      c = Contact.create(:name=>name, :phone=>name)
   end
 end
 

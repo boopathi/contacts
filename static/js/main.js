@@ -17,4 +17,3 @@
 	})
     });
 })(this, this.document, jQuery);
-	
