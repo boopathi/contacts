@@ -38,6 +38,14 @@ end
 
 module Handle
   attr_accessor :json, :status, :message
+  
+end
+
+class Create
+  include Handle
+  def action
+    return "asdf"
+  end
 end
 
 class Handler
@@ -68,5 +76,14 @@ class Application
     outputObject = Handler.new params
     #here it is a json data
     @output = outputObject.data
+  end
+end
+
+#Run this as the last line of the application. To track all the classes that use the module Handle
+p Handle.constants.select
+Handle.constants.select do |c|
+  p "asdfadfs"
+  if Class === Handle.const_get(c)
+    p c
   end
 end
