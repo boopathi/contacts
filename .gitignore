@@ -16,6 +16,8 @@ tmp
 .yardoc
 _yardoc
 doc/
+
+# Custom
 .log
 .pid
 contacts.db
