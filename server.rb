@@ -28,6 +28,7 @@ DataMapper::Logger.new($stdout, :debug)
 DataMapper.finalize
 DataMapper.auto_upgrade!
 
+
 #Handler for default view - Throw all content from the database
 class View
   attr_accessor :data
@@ -44,10 +45,10 @@ end
 class Create
   include Handle
   def action
-    return "asdf"
+       return "asdf"
   end
 end
-
+ 
 class Handler
   attr_accessor :data
   @@allowed_actions = ["create", "delete", "show", "edit"]
@@ -59,11 +60,14 @@ class Handler
   end
   def create(name, phone)
     c = Contact.create(:name=>name, :phone=>name)
+    redirect "/test"
   end
   def delete(name, phone="")
     return "asdf"
   end
 end
+
+
 
 #Routers - Application is just for binding 
 class Application
