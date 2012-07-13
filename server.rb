@@ -54,6 +54,9 @@ class Handler
   def initialize(post)
     self.method(post[:action].to_sym).call post[:name], post[:phone] if @@allowed_actions.include? post[:action]
   end
+  def test
+    
+  end
   def create(name, phone)
     c = Contact.create(:name=>name, :phone=>name)
   end
@@ -71,6 +74,9 @@ class Application
     haml :index
   end
   
+  get "/test" do
+    p params
+  end
   # The REST API for handling all data
   post '/handle' do
     outputObject = Handler.new params
